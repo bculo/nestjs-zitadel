@@ -2,9 +2,11 @@ import {
   Body,
   Controller,
   Get,
+  Inject,
   NotFoundException,
   Param,
   Post,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateTodoItem } from './dto/create-todo.dto';
@@ -21,13 +23,13 @@ export class TodoController {
   }
 
   @Post('create')
-  create(@Body() req: CreateTodoItem) {
+  create(@Body(new ValidationPipe()) req: CreateTodoItem) {
     this.todoService.create(req);
   }
 
   @Get('all')
-  all() {
-    return this.todoService.all();
+  async all() {
+    return await this.todoService.all();
   }
 
   @Get(':name')

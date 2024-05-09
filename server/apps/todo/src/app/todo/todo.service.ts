@@ -4,20 +4,29 @@ https://docs.nestjs.com/providers#services
 
 import { Injectable } from '@nestjs/common';
 import { Todo } from './interfaces/todo.interface';
+import { InjectRepository } from '@nestjs/typeorm';
+import { TodoItemEntity } from '../db/todo-item.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class TodoService {
-  private readonly todos: Todo[] = [];
+  constructor(
+    @InjectRepository(TodoItemEntity)
+    private readonly todoItemRepository: Repository<TodoItemEntity>
+  ) {}
 
-  create(item: Todo) {
-    this.todos.push(item);
+  async create(item: Todo) {
+    await this.todoItemRepository.save({
+      description: item.description,
+      name: item.name,
+    });
   }
 
-  all(): Todo[] {
-    return [...this.todos];
+  async all(): Promise<TodoItemEntity[]> {
+    return await this.todoItemRepository.find();
   }
 
   findOne(name: string): Todo | null {
-    return this.todos.find((x) => x.name === name);
+    return null;
   }
 }

@@ -1,9 +1,12 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString } from 'class-validator';
 
 export class CreateTodoItem {
-    @ApiProperty()
-    name: string;
-    
-    @ApiProperty()
-    description: string;
+  @IsString()
+  @ApiProperty()
+  name: string;
+
+  @IsString()
+  @ApiProperty()
+  description: string;
 }
