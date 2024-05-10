@@ -1,20 +1,20 @@
+import { TodoListEntity } from './todo-list.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
-import { TodoListSchema } from './todo-list.schema';
-import { TodoItemSchema } from './todo-item.schema';
+import { TodoItemEntity } from './todo-item.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([TodoItemSchema, TodoListSchema]),
+    TypeOrmModule.forFeature([TodoItemEntity, TodoListEntity]),
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.getOrThrow('POSTGRES_HOST'),
         database: configService.getOrThrow('POSTGRES_DATABASE'),
         port: configService.getOrThrow('POSTGRES_PORT'),
-        autoLoadEntities: true,
         synchronize: configService.getOrThrow('POSTGRES_SYNCHRONIZE'),
+        autoLoadEntities: true,
       }),
       inject: [ConfigService],
     }),

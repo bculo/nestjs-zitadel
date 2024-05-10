@@ -9,4 +9,8 @@ export class CreateTodoItem {
   @IsString()
   @ApiProperty()
   description: string;
+
+  @IsString()
+  @ApiProperty()
+  todoListId: string;
 }
