@@ -1,3 +1,4 @@
+import { DataSource } from 'typeorm';
 import {
   Body,
   Controller,
@@ -12,11 +13,16 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateTodoItem } from './dto/create-todo.dto';
 import { TodoService } from './todo.service';
 import { CreateTodoListItem } from './dto/create-todo-list.dto';
+import { TodoListEntity } from '../db/todo-list.entity';
+import { TodoItemEntity } from '../db/todo-item.entity';
 
 @Controller({ path: 'api/todo' })
 @ApiTags('todo')
 export class TodoController {
-  constructor(private readonly todoService: TodoService) {}
+  constructor(
+    private readonly todoService: TodoService,
+    private readonly source: DataSource
+  ) {}
 
   @Post('create-item')
   createItem(@Body(new ValidationPipe()) req: CreateTodoItem) {
@@ -46,8 +52,8 @@ export class TodoController {
   }
 
   @Get('todo-list/:id')
-  findOneTodoList(@Param('id') name: string) {
-    const item = this.todoService.findOneTodoList(name);
+  async findOneTodoList(@Param('id') id: string) {
+    const item = this.todoService.findOneTodoList(id);
     if (!item) throw new NotFoundException();
     return item;
   }

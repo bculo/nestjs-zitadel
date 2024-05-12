@@ -3,10 +3,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { TodoItemEntity } from './todo-item.entity';
+import { Question } from './question.entity';
+import { Category } from './category.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([TodoItemEntity, TodoListEntity]),
+    TypeOrmModule.forFeature([
+      TodoItemEntity,
+      TodoListEntity,
+      Question,
+      Category,
+    ]),
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',

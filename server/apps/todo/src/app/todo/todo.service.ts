@@ -43,6 +43,13 @@ export class TodoService {
   }
 
   async findOneTodoList(id: string): Promise<TodoListEntity | null> {
-    return await this.todoListRepository.findOneBy({ id: id });
+    return await this.todoListRepository.findOne({
+      where: {
+        id: id,
+      },
+      relations: {
+        items: true,
+      },
+    });
   }
 }
