@@ -14,6 +14,15 @@ module.exports = {
       assets: ['./src/assets'],
       optimization: false,
       outputHashing: 'none',
+      transformers: [
+        {
+          // adds augmentation of DTO objects, see https://docs.nestjs.com/openapi/cli-plugin
+          name: "@nestjs/swagger/plugin",
+          options: {
+            introspectComments: true
+          }
+        }
+      ]
     }),
   ],
 };

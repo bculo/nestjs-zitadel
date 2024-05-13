@@ -6,6 +6,8 @@ import { Module } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { QuestionModule } from './question/question.module';
+import { TestModule } from './test/test.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -13,6 +15,8 @@ import { QuestionModule } from './question/question.module';
     DbModule,
     TodoModule,
     QuestionModule,
+    TestModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

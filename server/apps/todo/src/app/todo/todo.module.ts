@@ -1,3 +1,4 @@
+import { Connection } from 'typeorm';
 /*
 https://docs.nestjs.com/modules
 */
@@ -7,9 +8,10 @@ import { TodoController } from './todo.controller';
 import { TodoService } from './todo.service';
 import { LoggerMiddleware } from '../common/middlewares/logger.middleware';
 import { DbModule } from '../db/db.module';
+import { TestModule } from '../test/test.module';
 
 @Module({
-  imports: [DbModule],
+  imports: [DbModule, TestModule],
   controllers: [TodoController],
   providers: [
     {
@@ -21,6 +23,7 @@ import { DbModule } from '../db/db.module';
       useClass: TodoService,
     },
   ],
+  exports: ['CONNECTION'],
 })
 export class TodoModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
