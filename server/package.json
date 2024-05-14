@@ -3,9 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "typeorm": "typeorm-ts-node-commonjs",
-    "migration:run": "ts-node --project apps/todo/tsconfig.app.json ./node_modules/typeorm/cli -d apps/todo/src/app/db/configs/typeorm.config.ts migration:run",
-    "migration:generate": "ts-node --project apps/todo/tsconfig.app.json ./node_modules/typeorm/cli migration:generate -- -d apps/todo/src/app/db/configs/typeorm.config.ts"
+    "migration:generate": "ts-node --project apps/todo/tsconfig.app.json ./node_modules/typeorm/cli.js migration:generate -d apps/todo/data-source.ts" ,
+    "migration:run": "ts-node --project apps/todo/tsconfig.app.json ./node_modules/typeorm/cli.js migration:run -d apps/todo/data-source.ts" 
   },
   "private": true,
   "dependencies": {

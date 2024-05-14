@@ -9,6 +9,9 @@ export class TodoListEntity {
   @Column()
   name: string;
 
+  @Column({ nullable: true })
+  random: string;
+
   @OneToMany(() => TodoItemEntity, (item) => item.todoList)
   items: TodoItemEntity[];
 }
