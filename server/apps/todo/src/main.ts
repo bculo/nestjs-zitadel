@@ -12,16 +12,38 @@ import { AppModule } from './app/app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  const port = process.env.PORT || 3000;
+
   const config = new DocumentBuilder()
     .setTitle('Todo example')
     .setDescription('The Todo API description')
     .setVersion('1.0')
+    .addOAuth2({
+      type: 'oauth2',
+      flows: {
+        authorizationCode: {
+          authorizationUrl: 'http://localhost:8080/oauth/v2/authorize',
+          tokenUrl: 'http://localhost:8080/oauth/v2/token',
+          scopes: {
+            openid: true,
+          },
+        },
+      },
+    })
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('swagger', app, document);
 
-  const port = process.env.PORT || 3000;
+  SwaggerModule.setup('swagger/', app, document, {
+    swaggerOptions: {
+      initOAuth: {
+        usePkceWithAuthorizationCodeGrant: true,
+        clientId: '267120715239587843@test',
+        scopes: ['openid'],
+      },
+    },
+    useGlobalPrefix: true,
+  });
 
   await app.listen(port);
   Logger.log(`🚀 Application is running on: http://localhost:${port}`);

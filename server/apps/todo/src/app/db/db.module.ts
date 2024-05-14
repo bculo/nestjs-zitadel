@@ -17,6 +17,8 @@ import { Category } from './category.entity';
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
+        username: 'postgres',
+        password: 'postgres',
         host: configService.getOrThrow('POSTGRES_HOST'),
         database: configService.getOrThrow('POSTGRES_DATABASE'),
         port: configService.getOrThrow('POSTGRES_PORT'),
