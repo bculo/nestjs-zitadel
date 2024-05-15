@@ -26,6 +26,8 @@ async function bootstrap() {
           tokenUrl: 'http://localhost:8080/oauth/v2/token',
           scopes: {
             openid: true,
+            profile: true,
+            email: true,
           },
         },
       },
@@ -39,10 +41,11 @@ async function bootstrap() {
       initOAuth: {
         usePkceWithAuthorizationCodeGrant: true,
         clientId: '267120715239587843@test',
-        scopes: ['openid'],
+        // clientSecret:
+        //   'YzkMVMSXd0SdrfhWLcyWLdmrahcqCeX8f5KCWKVCOFjozli0LwVn0tOryzoBhi7X',
+        scopes: ['openid', 'profile', 'email'],
       },
     },
-    useGlobalPrefix: true,
   });
 
   await app.listen(port);

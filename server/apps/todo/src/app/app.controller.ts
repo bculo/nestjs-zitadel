@@ -1,8 +1,17 @@
-import { Controller, Get, HttpCode, Post, Body, Inject } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Body,
+  Inject,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiOAuth2, ApiProperty } from '@nestjs/swagger';
 
 import { AppService } from './app.service';
 import { TestService } from './test/test.service';
+import { Roles, ZitadelAuthGuard, RolesGuard } from 'nest-zitadel';
 
 export class CreateCatDto {
   @ApiProperty({ required: true })
@@ -27,6 +36,9 @@ export class AppController {
 
   @Get('test')
   @HttpCode(200)
+  @ApiOAuth2([])
+  @Roles('User')
+  @UseGuards(ZitadelAuthGuard, RolesGuard)
   test() {
     console.log(this.testService.getIdentifier());
     return this.appService.getData();

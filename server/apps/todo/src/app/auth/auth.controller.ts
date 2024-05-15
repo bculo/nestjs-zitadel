@@ -1,5 +1,5 @@
 import { Public } from './public.decorator';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOAuth2, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/sign-in.dto';
@@ -16,6 +16,7 @@ export class AuthController {
     return await this.service.signIn(req);
   }
 
+  @ApiOAuth2([])
   @UseGuards(AuthGuard)
   @Get()
   async authTest() {
