@@ -1,9 +1,15 @@
+import {
+  ZitadelAuthGuard,
+  RolesGuard,
+  Roles,
+  ZitadelUser,
+  AuthenticatedUser,
+} from 'nest-zitadel';
 import { Public } from './public.decorator';
-import { ApiOAuth2, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { ApiOAuth2, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/sign-in.dto';
-import { AuthGuard } from './auth.guard';
 
 @Controller('api/auth')
 @ApiTags('auth')
@@ -16,10 +22,11 @@ export class AuthController {
     return await this.service.signIn(req);
   }
 
-  @ApiOAuth2([])
-  @UseGuards(AuthGuard)
   @Get()
-  async authTest() {
-    return 'HELLO';
+  @ApiOAuth2([])
+  @Roles('User')
+  @UseGuards(ZitadelAuthGuard, RolesGuard)
+  async authTest(@AuthenticatedUser() user: ZitadelUser) {
+    return user;
   }
 }
