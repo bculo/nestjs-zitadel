@@ -13,7 +13,7 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateTodoItem } from './dto/create-todo.dto';
 import { TodoService } from './todo.service';
 import { CreateTodoListItem } from './dto/create-todo-list.dto';
-import { TodoItemEntity } from '../db/todo-item.entity';
+import { TodoItemEntity } from '@server/db';
 import { TestService } from '../test/test.service';
 
 @Controller({ path: 'api/todo' })

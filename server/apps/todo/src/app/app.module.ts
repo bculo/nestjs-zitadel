@@ -1,5 +1,4 @@
-import { ConfigModule } from '@nestjs/config';
-import { DbModule } from './db/db.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TodoModule } from './todo/todo.module';
 import { Module } from '@nestjs/common';
 import { ZitadelAuthModule } from 'nest-zitadel';
@@ -9,6 +8,8 @@ import { AppController } from './app.controller';
 import { QuestionModule } from './question/question.module';
 import { TestModule } from './test/test.module';
 import { AuthModule } from './auth/auth.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DbModule } from '@server/db';
 
 @Module({
   imports: [
@@ -30,6 +31,19 @@ import { AuthModule } from './auth/auth.module';
           clientId: '267215443494764547@test',
         },
       },
+    }),
+    TypeOrmModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        username: 'postgres',
+        password: 'postgres',
+        host: configService.getOrThrow('POSTGRES_HOST'),
+        database: configService.getOrThrow('POSTGRES_DATABASE'),
+        port: configService.getOrThrow('POSTGRES_PORT'),
+        synchronize: configService.getOrThrow('POSTGRES_SYNCHRONIZE'),
+        autoLoadEntities: true,
+      }),
+      inject: [ConfigService],
     }),
   ],
   controllers: [AppController],

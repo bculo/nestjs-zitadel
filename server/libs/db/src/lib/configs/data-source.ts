@@ -8,12 +8,14 @@ const configService = new ConfigService();
 
 export default new DataSource({
   type: 'postgres',
-  host: 'localhost',
+  host: configService.getOrThrow('POSTGRES_HOST'),
+  username: configService.getOrThrow('POSTGRES_USER'),
+  password: configService.getOrThrow('POSTGRES_PASSWORD'),
   database: configService.getOrThrow('POSTGRES_DATABASE'),
   port: configService.getOrThrow('POSTGRES_PORT'),
-  entities: [],
+  entities: ['libs/db/src/lib/*.entity.ts'],
+  synchronize: false,
+  logging: true,
   migrationsTableName: 'migrations',
-  migrations: [`${__dirname}/migrations/*.ts`],
+  migrations: ['libs/db/src/lib/migrations/*.ts'],
 });
-
-console.log(`${__dirname}/migrations/*.ts`);

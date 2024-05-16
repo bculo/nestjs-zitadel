@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "migration:generate": "ts-node --project apps/todo/tsconfig.app.json ./node_modules/typeorm/cli.js migration:generate -d apps/todo/data-source.ts",
-    "migration:run": "ts-node --project apps/todo/tsconfig.app.json ./node_modules/typeorm/cli.js migration:run -d apps/todo/data-source.ts"
+    "migration:generate": "ts-node --project libs/db/tsconfig.json ./node_modules/typeorm/cli.js migration:generate -d libs/db/src/lib/configs/data-source.ts",
+    "migration:run": "ts-node --project libs/db/tsconfig.json ./node_modules/typeorm/cli.js migration:run -d libs/db/src/lib/configs/data-source.ts"
   },
   "private": true,
   "dependencies": {

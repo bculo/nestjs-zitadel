@@ -1,9 +1,9 @@
 import { CreateTodoListItem } from './dto/create-todo-list.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TodoItemEntity } from '../db/todo-item.entity';
+import { TodoItemEntity } from '@server/db';
 import { Repository } from 'typeorm';
-import { TodoListEntity } from '../db/todo-list.entity';
+import { TodoListEntity } from '@server/db';
 import { CreateTodoItem } from './dto/create-todo.dto';
 
 @Injectable()

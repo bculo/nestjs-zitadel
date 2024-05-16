@@ -1,13 +1,8 @@
-import { Connection } from 'typeorm';
-/*
-https://docs.nestjs.com/modules
-*/
-
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TodoController } from './todo.controller';
 import { TodoService } from './todo.service';
 import { LoggerMiddleware } from '../common/middlewares/logger.middleware';
-import { DbModule } from '../db/db.module';
+import { DbModule } from '@server/db';
 import { TestModule } from '../test/test.module';
 
 @Module({
