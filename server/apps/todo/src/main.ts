@@ -8,11 +8,14 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const port = process.env.PORT || 3000;
+
+  const configService: ConfigService = app.get(ConfigService);
 
   const config = new DocumentBuilder()
     .setTitle('Todo example')
@@ -22,8 +25,10 @@ async function bootstrap() {
       type: 'oauth2',
       flows: {
         authorizationCode: {
-          authorizationUrl: 'http://localhost:8080/oauth/v2/authorize',
-          tokenUrl: 'http://localhost:8080/oauth/v2/token',
+          authorizationUrl: configService.getOrThrow(
+            'ZITADEL_AUTHORIZATION_URL'
+          ),
+          tokenUrl: configService.getOrThrow('ZITADEL_TOKEN_URL'),
           scopes: {
             openid: true,
             profile: true,
@@ -40,9 +45,7 @@ async function bootstrap() {
     swaggerOptions: {
       initOAuth: {
         usePkceWithAuthorizationCodeGrant: true,
-        clientId: '267120715239587843@test',
-        // clientSecret:
-        //   'YzkMVMSXd0SdrfhWLcyWLdmrahcqCeX8f5KCWKVCOFjozli0LwVn0tOryzoBhi7X',
+        clientId: configService.getOrThrow('ZITADEL_SWAGGER_CLIENT_ID'),
         scopes: ['openid', 'profile', 'email'],
       },
     },
