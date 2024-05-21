@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
@@ -10,14 +11,9 @@ import { AuthService } from './auth.service';
       secret: '74176183071367165132880290209475',
       signOptions: { expiresIn: '60s' },
     }),
+    HttpModule,
   ],
-  providers: [
-    AuthService,
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AuthGuard,
-    // },
-  ],
+  providers: [AuthService],
   exports: [],
   controllers: [AuthController],
 })
