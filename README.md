@@ -21,15 +21,21 @@ An demo app that shows integration between nestjs application and user managemen
 
 - create swagger app
 
-  - add app for swagger UI client
+  - add app for swagger UI client (generate user JWT token)
   - New, Web type, Auth method is Auth code with PKCE, redirect uri http://{host}/swagger/oauth2-redirect.html and Development mode ON
   - visit Token settings tab and select JWT option from 'Auth Token Type' dropdown. Also, check 'Add user roles to the acces token' checkbox
-  - copy client ID and paste it inside main.tsx file
+  - copy client ID and set 'ZITADEL_SWAGGER_CLIENT_ID' value in 'env' file
 
-- create API app
+- create backend API app (API endpoint protection)
+
   - add app for backend API client
   - New, API, Auth method JWT
-  - In configuration tab create new Keys. Copy generated json and paste it inside main.tsx
+  - In configuration tab create new Keys. Copy generated/downloaded json and paste it into ZitadelAuthModule configuration inside app.module.ts
+
+- create user service (usage of USER API)
+  - add service user
+  - assign 'ORG User Manager' role
+  - generate service user secrets and fill ZITADEL*SERVICE_USER*\* values inside env file
 
 ## Project db configuration
 
